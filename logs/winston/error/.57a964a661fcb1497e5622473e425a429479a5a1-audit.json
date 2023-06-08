@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/.57a964a661fcb1497e5622473e425a429479a5a1-audit.json",
+    "files": [
+        {
+            "date": 1686237761370,
+            "name": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/error-2023-06-08-20.log",
+            "hash": "8cf1372587091eacc354bd5e1e35930fc351532aaa39849d1610f0ee201b8ce5"
+        }
+    ],
+    "hashType": "sha256"
+}
