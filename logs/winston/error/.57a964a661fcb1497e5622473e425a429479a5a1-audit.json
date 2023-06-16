@@ -1,0 +1,35 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/.57a964a661fcb1497e5622473e425a429479a5a1-audit.json",
+    "files": [
+        {
+            "date": 1686582863714,
+            "name": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/error-2023-06-12-20.log",
+            "hash": "e765857afe875d06e1cc563149cb72ecc3077d1b6f420c375ff875fc752c333d"
+        },
+        {
+            "date": 1686586578846,
+            "name": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/error-2023-06-12-21.log",
+            "hash": "202fb7e0e2e7362fd7185e2388f2141073ee17910e834dd4fe339dc57577d541"
+        },
+        {
+            "date": 1686756116236,
+            "name": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/error-2023-06-14-20.log",
+            "hash": "bfa26fef4740dbd11404375549cafadd9dbe4194c2449919c6d561afabe45774"
+        },
+        {
+            "date": 1686756602657,
+            "name": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/error-2023-06-14-21.log",
+            "hash": "f593050e37a595fb3053b53ca43606e8da55a53f3ea555e45d4ab30ddd479b5c"
+        },
+        {
+            "date": 1686942864049,
+            "name": "/Users/mahadebsen/My Space/Level-2 Course practices/university management/logs/winston/error/error-2023-06-17-00.log",
+            "hash": "3ce48b602525dacca69126f74ea59ad505399b42af33dc38bc22e7760e178cbb"
+        }
+    ],
+    "hashType": "sha256"
+}
