@@ -1,7 +1,13 @@
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiErrors';
-import { academicSemesterTitleCodeMapper } from './academicSemestar.constant';
-import { IAcademicSemester } from './academicSemester.interface';
+import {
+  academicSemestarSearchableFields,
+  academicSemesterTitleCodeMapper,
+} from './academicSemestar.constant';
+import {
+  IAcademicSemester,
+  IAcademicSemesterFilters,
+} from './academicSemester.interface';
 import { academicSemesterModel } from './academicSemester.model';
 import { IGenaricResponse } from '../../../interfaces/common';
 import { IPaginationOption } from '../../../interfaces/pagination';
@@ -26,8 +32,53 @@ const createSemester = async (
 };
 
 const getAllSemester = async (
+  filters: IAcademicSemesterFilters,
   paginationOption: IPaginationOption
 ): Promise<IGenaricResponse<IAcademicSemester[]>> => {
+  const { searchTerm, ...filtersData } = filters;
+
+  const andCodition = [];
+
+  if (searchTerm) {
+    andCodition.push({
+      $or: academicSemestarSearchableFields.map(item => ({
+        [item]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filtersData).length) {
+    andCodition.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
+
+  const whareCondition = andCodition.length > 0 ? { $and: andCodition } : {};
+
+  /*
+  andCodition.push({
+      $or: [
+        {
+          title: {
+            $regex: searchTerm,
+            $options: 'i',
+          },
+        },
+        {
+          code: {
+            $regex: searchTerm,
+            $options: 'i',
+          },
+        },
+      ],
+    });
+  */
+
   // const { page = 1, limit = 10 } = paginationOption;
   // const skip = (page - 1) * limit;
   // Or,
@@ -41,7 +92,7 @@ const getAllSemester = async (
   }
 
   const result = await academicSemesterModel
-    .find()
+    .find(whareCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
