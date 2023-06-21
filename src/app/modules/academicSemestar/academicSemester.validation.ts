@@ -23,6 +23,41 @@ const createAcademicSemesterZodSchema = z.object({
   }),
 });
 
+// Ensure 01: route lavel: --> update --> Give me title and code both,
+const updateAcademicSemesterZodSchema = z
+  .object({
+    body: z.object({
+      title: z
+        .enum([...academicSemesterTytle] as [string, ...string[]], {
+          required_error: 'Title is required',
+        })
+        .optional(),
+      year: z.string({ required_error: 'Year is required' }).optional(),
+      code: z
+        .enum([...academicSemesterCode] as [string, ...string[]], {
+          required_error: 'Code is required',
+        })
+        .optional(),
+      startMonth: z
+        .enum([...academicSemesterMonth] as [string, ...string[]], {
+          required_error: 'Start month is required',
+        })
+        .optional(),
+      endMonth: z
+        .enum([...academicSemesterMonth] as [string, ...string[]], {
+          required_error: 'End month is required',
+        })
+        .optional(),
+    }),
+  })
+  .refine(
+    data =>
+      (data.body.title && data.body.code) ||
+      (!data.body.title && !data.body.code),
+    { message: 'Either title and code should be provided or neither' }
+  );
+
 export const academicSemesterValidation = {
   createAcademicSemesterZodSchema,
+  updateAcademicSemesterZodSchema,
 };

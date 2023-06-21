@@ -12,5 +12,5 @@ export type IGenaricResponse<T> = {
 export type IGenaricErrorResponse = {
   statusCode: number;
   message: string;
-  errorMessage: IGenaricErrorMessage[];
+  errorMessages: IGenaricErrorMessage[];
 };

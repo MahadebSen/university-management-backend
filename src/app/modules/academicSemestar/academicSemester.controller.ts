@@ -6,6 +6,7 @@ import httpStatus from 'http-status';
 import pick from '../../../shared/pick';
 import { paginationFields } from '../../../constants/pagination';
 import { academicSemestarFiltelableFields } from './academicSemestar.constant';
+import { IAcademicSemester } from './academicSemester.interface';
 
 const createSemester = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -53,7 +54,42 @@ const getAllSemesters = catchAsync(
   }
 );
 
+const getSingleSemester = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    const result = await AcademicSemesterService.getSingleSemester(id);
+
+    sendResponse<IAcademicSemester>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: '',
+      data: result,
+    });
+    next();
+  }
+);
+
+const updateSemester = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const payload = req.body;
+
+    const result = await AcademicSemesterService.updateSemester(id, payload);
+
+    sendResponse<IAcademicSemester>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Semester updated successfully!',
+      data: result,
+    });
+    next();
+  }
+);
+
 export const AcademicSemesterController = {
   createSemester,
   getAllSemesters,
+  getSingleSemester,
+  updateSemester,
 };
