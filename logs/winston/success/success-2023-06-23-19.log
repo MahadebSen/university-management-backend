@@ -1,0 +1,60 @@
+{
+  message: 'Successfully db is connected',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:08:18.237Z'
+}
+{
+  message: 'Example app listening on port 5000',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:08:18.242Z'
+}
+{
+  message: 'Successfully db is connected',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:09:17.330Z'
+}
+{
+  message: 'Example app listening on port 5000',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:09:17.336Z'
+}
+{
+  message: 'SIGTERM is received',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:11:29.496Z'
+}
+{
+  message: 'Successfully db is connected',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:11:46.315Z'
+}
+{
+  message: 'Example app listening on port 5000',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:11:46.321Z'
+}
+{
+  message: 'SIGTERM is received',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:13:29.192Z'
+}
+{
+  message: 'Successfully db is connected',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:13:44.806Z'
+}
+{
+  message: 'Example app listening on port 5000',
+  level: 'info',
+  label: 'right meow!',
+  timestamp: '2023-06-23T14:13:44.814Z'
+}
