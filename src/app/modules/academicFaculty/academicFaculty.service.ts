@@ -16,7 +16,7 @@ const createFaculty = async (
   const result = await academicFacultyModel.create(payload);
 
   if (!result) {
-    throw new ApiError(400, 'Failed to create semester');
+    throw new ApiError(400, 'Failed to create faculty');
   } else {
     return result;
   }

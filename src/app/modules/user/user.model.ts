@@ -7,6 +7,9 @@ const userSchema = new Schema<IUser>(
     id: { type: String, required: true, unique: true },
     role: { type: String, required: true },
     password: { type: String, required: true },
+    student: { type: String, ref: 'Student' },
+    // faculty: {type:String, ref: "Faculty"},
+    // admin: {type:String, ref: "Admin"},
   },
   {
     // createdAt and updatedAt
