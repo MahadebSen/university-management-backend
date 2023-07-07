@@ -19,7 +19,7 @@ export const academicFacultySchema = new Schema<
   }
 );
 
-export const academicFacultyModel = model<
+export const AcademicFacultyModel = model<
   IAcademicFaculty,
   AcademicFacultyModelType
 >('AcademicFaculty', academicFacultySchema);

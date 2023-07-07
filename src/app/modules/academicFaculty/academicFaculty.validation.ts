@@ -12,7 +12,7 @@ const updateAcademicFacultyZodSchema = z.object({
   }),
 });
 
-export const academicFacultyValidation = {
+export const AcademicFacultyValidation = {
   createAcademicFacultyZodSchema,
   updateAcademicFacultyZodSchema,
 };

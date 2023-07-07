@@ -70,7 +70,7 @@ const studentSchema = new Schema<IStudent, StudentModelType>(
 // StudentSchema.index({
 //   bloodGroup: 1,
 // });
-export const studentModel = model<IStudent, StudentModelType>(
+export const StudentModel = model<IStudent, StudentModelType>(
   'Student',
   studentSchema
 );

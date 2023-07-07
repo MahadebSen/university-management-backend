@@ -27,7 +27,7 @@ export const academicSemesterSchema = new Schema<IAcademicSemester>(
 
 // Handling same year and same semester issue
 academicSemesterSchema.pre('save', async function (next) {
-  const isExist = await academicSemesterModel.findOne({
+  const isExist = await AcademicSemesterModel.findOne({
     title: this.title,
     year: this.year,
   });
@@ -40,7 +40,7 @@ academicSemesterSchema.pre('save', async function (next) {
   next();
 });
 
-export const academicSemesterModel = model<
+export const AcademicSemesterModel = model<
   IAcademicSemester,
   AcademicSemesterModelType
 >('AcademicSemester', academicSemesterSchema);

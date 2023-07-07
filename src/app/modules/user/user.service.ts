@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import config from '../../../config/index';
 import ApiError from '../../../errors/ApiErrors';
-import { academicSemesterModel } from '../academicSemestar/academicSemester.model';
+import { AcademicSemesterModel } from '../academicSemestar/academicSemester.model';
 import { IStudent } from '../student/student.interface';
 import { IUser } from './user.interface';
-import { userModel } from './user.model';
+import { UserModel } from './user.model';
 import { generateStudentId } from './user.utils';
-import { studentModel } from '../student/student.model';
+import { StudentModel } from '../student/student.model';
 import httpStatus from 'http-status';
 
 const createStudent = async (
@@ -22,7 +22,7 @@ const createStudent = async (
   user.role = 'student';
 
   // Generate incremental Id
-  const academicSemester = await academicSemesterModel.findById(
+  const academicSemester = await AcademicSemesterModel.findById(
     student.academicSemester
   );
 
@@ -37,12 +37,12 @@ const createStudent = async (
       student.id = id;
     }
 
-    const createStudent = await studentModel.create([student], { season });
+    const createStudent = await StudentModel.create([student], { season });
     if (!createStudent.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Faild to create a student');
     }
 
-    const createUser = await userModel.create([user], { season });
+    const createUser = await UserModel.create([user], { season });
     user.student = createStudent[0]._id;
     if (!createUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Faild to create a user');
@@ -59,7 +59,7 @@ const createStudent = async (
   }
 
   if (newUserAllData) {
-    newUserAllData = userModel.findOne({ id: newUserAllData.id }).populate({
+    newUserAllData = UserModel.findOne({ id: newUserAllData.id }).populate({
       path: 'student',
       populate: [
         {

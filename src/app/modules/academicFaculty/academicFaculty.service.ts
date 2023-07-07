@@ -8,12 +8,12 @@ import {
   IAcademicFaculty,
   IAcademicFacultyFilters,
 } from './academicFaculty.interface';
-import { academicFacultyModel } from './academicFaculty.model';
+import { AcademicFacultyModel } from './academicFaculty.model';
 
 const createFaculty = async (
   payload: IAcademicFaculty
 ): Promise<IAcademicFaculty | null> => {
-  const result = await academicFacultyModel.create(payload);
+  const result = await AcademicFacultyModel.create(payload);
 
   if (!result) {
     throw new ApiError(400, 'Failed to create faculty');
@@ -60,13 +60,12 @@ const getAllFaculty = async (
     sortCondition[sortBy] = sortOrder;
   }
 
-  const result = await academicFacultyModel
-    .find(whareCondition)
+  const result = await AcademicFacultyModel.find(whareCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
 
-  const total = await academicFacultyModel.countDocuments();
+  const total = await AcademicFacultyModel.countDocuments(whareCondition);
 
   return {
     meta: {
@@ -81,7 +80,7 @@ const getAllFaculty = async (
 const getSingleFaculty = async (
   id: string
 ): Promise<IAcademicFaculty | null> => {
-  const result = await academicFacultyModel.findById(id);
+  const result = await AcademicFacultyModel.findById(id);
 
   return result;
 };
@@ -90,7 +89,7 @@ const updateFaculty = async (
   id: string,
   payload: Partial<IAcademicFaculty>
 ): Promise<IAcademicFaculty | null> => {
-  const result = await academicFacultyModel.findByIdAndUpdate(
+  const result = await AcademicFacultyModel.findByIdAndUpdate(
     { _id: id },
     payload,
     { new: true }
@@ -100,7 +99,7 @@ const updateFaculty = async (
 };
 
 const deleteFaculty = async (id: string) => {
-  const result = academicFacultyModel.findByIdAndDelete({ _id: id });
+  const result = AcademicFacultyModel.findByIdAndDelete({ _id: id });
 
   return result;
 };

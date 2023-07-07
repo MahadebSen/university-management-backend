@@ -24,7 +24,7 @@ export const academicDepartmentSchema = new Schema<
   }
 );
 
-export const academicDepartmentModel = model<
+export const AcademicDepartmentModel = model<
   IAcademicDepartment,
   AcademicDepartmentModelType
 >('AcademicDepartment', academicDepartmentSchema);

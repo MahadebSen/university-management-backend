@@ -28,7 +28,7 @@ export const studentFiltelableFields = [
   'bloodGroup',
   'email',
   'contactNo',
-  'name.firstName',
-  'name.middleName',
-  'name.lastName',
+  // 'name.firstName',
+  // 'name.middleName',
+  // 'name.lastName',
 ];

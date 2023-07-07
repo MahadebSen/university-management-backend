@@ -8,7 +8,7 @@ import {
   IAcademicSemester,
   IAcademicSemesterFilters,
 } from './academicSemester.interface';
-import { academicSemesterModel } from './academicSemester.model';
+import { AcademicSemesterModel } from './academicSemester.model';
 import { IGenaricResponse } from '../../../interfaces/common';
 import { IPaginationOption } from '../../../interfaces/pagination';
 import { paginationHelper } from '../../../helpers/paginationHelper';
@@ -17,7 +17,7 @@ import { SortOrder } from 'mongoose';
 const createSemester = async (
   payload: IAcademicSemester
 ): Promise<IAcademicSemester | null> => {
-  const result = await academicSemesterModel.create(payload);
+  const result = await AcademicSemesterModel.create(payload);
 
   // Summer --> 02 !== 03
   if (academicSemesterTitleCodeMapper[payload.title] !== payload.code) {
@@ -91,13 +91,12 @@ const getAllSemester = async (
     sortCondition[sortBy] = sortOrder;
   }
 
-  const result = await academicSemesterModel
-    .find(whareCondition)
+  const result = await AcademicSemesterModel.find(whareCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
 
-  const total = await academicSemesterModel.countDocuments();
+  const total = await AcademicSemesterModel.countDocuments();
 
   return {
     meta: {
@@ -112,7 +111,7 @@ const getAllSemester = async (
 const getSingleSemester = async (
   id: string
 ): Promise<IAcademicSemester | null> => {
-  const result = await academicSemesterModel.findById(id);
+  const result = await AcademicSemesterModel.findById(id);
 
   return result;
 };
@@ -129,7 +128,7 @@ const updateSemester = async (
   ) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid semester code');
   }
-  const result = await academicSemesterModel.findByIdAndUpdate(
+  const result = await AcademicSemesterModel.findByIdAndUpdate(
     { _id: id },
     payload,
     { new: true }
@@ -139,7 +138,7 @@ const updateSemester = async (
 };
 
 const deleteSemester = async (id: string) => {
-  const result = academicSemesterModel.findByIdAndDelete({ _id: id });
+  const result = AcademicSemesterModel.findByIdAndDelete({ _id: id });
 
   return result;
 };

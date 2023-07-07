@@ -63,7 +63,7 @@ const deleteStudent = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const studentController = {
+export const StudentController = {
   getAllStudent,
   getSingleStudent,
   updatedStudent,

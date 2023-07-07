@@ -49,7 +49,7 @@ const updateAcademicSemesterZodSchema = z
     { message: 'Either title and code should be provided or neither' }
   );
 
-export const academicSemesterValidation = {
+export const AcademicSemesterValidation = {
   createAcademicSemesterZodSchema,
   updateAcademicSemesterZodSchema,
 };

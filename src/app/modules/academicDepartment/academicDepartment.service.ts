@@ -5,7 +5,7 @@ import {
   IAcademicDepartment,
   IAcademicDepartmentFilters,
 } from './academicDepartment.interface';
-import { academicDepartmentModel } from './academicDepartment.model';
+import { AcademicDepartmentModel } from './academicDepartment.model';
 import { academicDepartmentSearchableFields } from './academicDepartment.constant';
 import { paginationHelper } from '../../../helpers/paginationHelper';
 import { SortOrder } from 'mongoose';
@@ -13,7 +13,7 @@ import { SortOrder } from 'mongoose';
 const createDepartment = async (
   payload: IAcademicDepartment
 ): Promise<IAcademicDepartment | null> => {
-  const result = (await academicDepartmentModel.create(payload)).populate(
+  const result = (await AcademicDepartmentModel.create(payload)).populate(
     'AcademicFaculty'
   );
 
@@ -62,14 +62,13 @@ const getAllDepartment = async (
     sortCondition[sortBy] = sortOrder;
   }
 
-  const result = await academicDepartmentModel
-    .find(whareCondition)
+  const result = await AcademicDepartmentModel.find(whareCondition)
     .populate('AcademicFaculty')
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
 
-  const total = await academicDepartmentModel.countDocuments();
+  const total = await AcademicDepartmentModel.countDocuments();
 
   return {
     meta: {
@@ -84,9 +83,9 @@ const getAllDepartment = async (
 const getSingleDepartment = async (
   id: string
 ): Promise<IAcademicDepartment | null> => {
-  const result = await academicDepartmentModel
-    .findById(id)
-    .populate('AcademicFaculty');
+  const result = await AcademicDepartmentModel.findById(id).populate(
+    'AcademicFaculty'
+  );
 
   return result;
 };
@@ -95,15 +94,17 @@ const updateDepartment = async (
   id: string,
   payload: Partial<IAcademicDepartment>
 ): Promise<IAcademicDepartment | null> => {
-  const result = await academicDepartmentModel
-    .findByIdAndUpdate({ _id: id }, payload, { new: true })
-    .populate('AcademicFaculty');
+  const result = await AcademicDepartmentModel.findByIdAndUpdate(
+    { _id: id },
+    payload,
+    { new: true }
+  ).populate('AcademicFaculty');
 
   return result;
 };
 
 const deleteDepartment = async (id: string) => {
-  const result = academicDepartmentModel.findByIdAndDelete({ _id: id });
+  const result = AcademicDepartmentModel.findByIdAndDelete({ _id: id });
 
   return result;
 };

@@ -4,7 +4,9 @@ import { IGenaricResponse } from '../../../interfaces/common';
 import { IPaginationOption } from '../../../interfaces/pagination';
 import { studentSearchableFields } from './student.constant';
 import { IStudent, IStudentFilters } from './student.interface';
-import { studentModel } from './student.model';
+import { StudentModel } from './student.model';
+import ApiError from '../../../errors/ApiErrors';
+import httpStatus from 'http-status';
 
 const getAllStudent = async (
   filters: IStudentFilters,
@@ -44,13 +46,15 @@ const getAllStudent = async (
     sortCondition[sortBy] = sortOrder;
   }
 
-  const result = await studentModel
-    .find(whareCondition)
+  const result = await StudentModel.find(whareCondition)
+    .populate('academicSemester')
+    .populate('academicDepartment')
+    .populate('academicFaculty')
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
 
-  const total = await studentModel.countDocuments();
+  const total = await StudentModel.countDocuments(whareCondition);
 
   return {
     meta: {
@@ -63,7 +67,10 @@ const getAllStudent = async (
 };
 
 const getSingleStudent = async (id: string): Promise<IStudent | null> => {
-  const result = await studentModel.findById(id);
+  const result = await StudentModel.findById(id)
+    .populate('academicSemester')
+    .populate('academicDepartment')
+    .populate('academicFaculty');
 
   return result;
 };
@@ -72,15 +79,17 @@ const updateStudent = async (
   id: string,
   payload: Partial<IStudent>
 ): Promise<IStudent | null> => {
-  // Summer --> 02 !== 03
-  // if (
-  //   payload.title &&
-  //   payload.code &&
-  //   academicSemesterTitleCodeMapper[payload.title] !== payload.code
-  // ) {
-  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid semester code');
-  // }
-  const result = await studentModel.findByIdAndUpdate({ _id: id }, payload, {
+  const isExist = await StudentModel.findOne({ id });
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found!');
+  }
+
+  const { name, guardian, localGuardian, ...student } = payload;
+
+  console.log(name, guardian, localGuardian, student);
+
+  const result = await StudentModel.findByIdAndUpdate({ _id: id }, payload, {
     new: true,
   });
 
@@ -88,7 +97,10 @@ const updateStudent = async (
 };
 
 const deleteStudent = async (id: string) => {
-  const result = studentModel.findByIdAndDelete({ _id: id });
+  const result = StudentModel.findByIdAndDelete({ _id: id })
+    .populate('academicSemester')
+    .populate('academicDepartment')
+    .populate('academicFaculty');
 
   return result;
 };

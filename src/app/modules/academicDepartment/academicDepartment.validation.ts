@@ -16,7 +16,7 @@ const updateAcademicDepartmentZodSchema = z.object({
   }),
 });
 
-export const academicDepartmentValidation = {
+export const AcademicDepartmentValidation = {
   createAcademicDepartmentZodSchema,
   updateAcademicDepartmentZodSchema,
 };
