@@ -17,9 +17,11 @@ const getAllStudent = async (
 
   const andCodition = [];
 
+  // {$or: [{title: {$regex: "Book 3",$options: 'i',}}]}
   if (searchTerm) {
     andCodition.push({
       $or: studentSearchableFields.map(item => ({
+        // {title: {$regex: "Book 3",$options: 'i',}}
         [item]: {
           $regex: searchTerm,
           $options: 'i',
@@ -28,14 +30,30 @@ const getAllStudent = async (
     });
   }
 
+  // {$and: [{genre: "Drama"}, {title: "Book 10"}]}
   if (Object.keys(filtersData).length) {
     andCodition.push({
+      // $and: [{key: value}]
       $and: Object.entries(filtersData).map(([field, value]) => ({
         [field]: value,
       })),
     });
   }
 
+  /*{
+    $and: [
+      {
+        $or: [
+          { title: { $regex: 'Book 3', $options: 'i' } },
+        ],
+      },
+      { 
+        $and: [
+          { genre: 'Fantasy' }
+        ] 
+      },
+    ];
+  }*/
   const whareCondition = andCodition.length > 0 ? { $and: andCodition } : {};
 
   const { page, limit, skip, sortBy, sortOrder } =

@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
-import { bloodGroup, gender } from './student.constant';
 import { IStudent, StudentModelType } from './student.interface';
+import { bloodGroup, gender } from '../user/user.constant';
 
 const studentSchema = new Schema<IStudent, StudentModelType>(
   {
@@ -67,9 +67,6 @@ const studentSchema = new Schema<IStudent, StudentModelType>(
   }
 );
 
-// StudentSchema.index({
-//   bloodGroup: 1,
-// });
 export const StudentModel = model<IStudent, StudentModelType>(
   'Student',
   studentSchema

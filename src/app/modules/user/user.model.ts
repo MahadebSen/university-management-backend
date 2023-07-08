@@ -8,7 +8,7 @@ const userSchema = new Schema<IUser>(
     role: { type: String, required: true },
     password: { type: String, required: true },
     student: { type: String, ref: 'Student' },
-    // faculty: {type:String, ref: "Faculty"},
+    faculty: { type: String, ref: 'Faculty' },
     // admin: {type:String, ref: "Admin"},
   },
   {

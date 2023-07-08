@@ -2,24 +2,16 @@ import { Model, Types } from 'mongoose';
 import { IAcademicFaculty } from '../academicFaculty/academicFaculty.interface';
 import { IAcademicDepartment } from '../academicDepartment/academicDepartment.interface';
 import { IAcademicSemester } from '../academicSemestar/academicSemester.interface';
+import { IUserBloodGroup, IUserGender } from '../user/user.interface';
 
-export type IStudentGender = 'male' | 'female' | 'others';
-export type IStudentBloodGroup =
-  | 'A+'
-  | 'A-'
-  | 'B+'
-  | 'B-'
-  | 'O+'
-  | 'O-'
-  | 'AB+'
-  | 'AB-';
-
+//embedded object
 export type UserName = {
   firstName: string;
-  lastName: string;
   middleName: string;
+  lastName: string;
 };
 
+//embedded object
 export type Guardian = {
   fatherName: string;
   fatherOccupation: string;
@@ -30,6 +22,7 @@ export type Guardian = {
   address: string;
 };
 
+//embedded object
 export type LocalGuardian = {
   name: string;
   occupation: string;
@@ -40,12 +33,12 @@ export type LocalGuardian = {
 export type IStudent = {
   id: string;
   name: UserName; //embedded object
-  gender: IStudentGender;
+  gender: IUserGender;
   dateOfBirth: string;
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloodGroup?: IStudentBloodGroup;
+  bloodGroup?: IUserBloodGroup;
   presentAddress: string;
   permanentAddress: string;
   guardian: Guardian; // embedded object
