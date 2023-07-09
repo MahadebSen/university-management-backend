@@ -8,7 +8,7 @@ const studentSchema = new Schema<IStudent, StudentModelType>(
     name: {
       type: {
         firstName: { type: String, required: true },
-        middleName: { type: String, required: true },
+        middleName: { type: String },
         lastName: { type: String, required: true },
       },
       required: true,

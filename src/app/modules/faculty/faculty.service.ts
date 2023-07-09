@@ -32,7 +32,8 @@ const getAllFaculty = async (
   }
 
   // {$and: [{genre: "Drama"}, {title: "Book 10"}]}
-  if (filtersData) {
+  if (Object.keys(filtersData).length) {
+    //*
     andCodition.push({
       // $and: [{key: value}]
       $and: Object.entries(filtersData).map(([field, value]) => ({

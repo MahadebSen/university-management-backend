@@ -40,12 +40,12 @@ const createStudent = async (
     }
 
     const createStudent = await StudentModel.create([student], { season });
+    user.student = createStudent[0]._id;
     if (!createStudent.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Faild to create a student');
     }
 
     const createUser = await UserModel.create([user], { season });
-    user.student = createStudent[0]._id;
     if (!createUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Faild to create a user');
     }
@@ -105,6 +105,7 @@ const createFaculty = async (
     }
 
     const createFaculty = await FacultyModel.create([faculty], { season });
+    user.faculty = createFaculty[0]._id;
     if (!createFaculty.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Faild to create a faculty');
     }
@@ -113,8 +114,6 @@ const createFaculty = async (
     if (!createUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Faild to create a user');
     }
-
-    user.faculty = createFaculty[0]._id;
 
     newUserAllData = createUser[0];
 

@@ -14,7 +14,7 @@ const createDepartment = async (
   payload: IAcademicDepartment
 ): Promise<IAcademicDepartment | null> => {
   const result = (await AcademicDepartmentModel.create(payload)).populate(
-    'AcademicFaculty'
+    'academicFaculty'
   );
 
   if (!result) {

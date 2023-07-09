@@ -7,7 +7,7 @@ import { IUserBloodGroup, IUserGender } from '../user/user.interface';
 //embedded object
 export type UserName = {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
 };
 
