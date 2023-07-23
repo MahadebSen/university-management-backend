@@ -7,7 +7,8 @@ import { IPaginationOption } from '../../../interfaces/pagination';
 import { IGenaricResponse } from '../../../interfaces/common';
 import { facultySearchableFields } from './faculty.constant';
 import { paginationHelper } from '../../../helpers/paginationHelper';
-import { SortOrder } from 'mongoose';
+import mongoose, { SortOrder } from 'mongoose';
+import { UserModel } from '../user/user.model';
 
 const getAllFaculty = async (
   filters: IFacultyFilters,
@@ -106,8 +107,38 @@ const updateFaculty = async (
   return result;
 };
 
+const deleteFaculty = async (id: string): Promise<IFaculty | null> => {
+  // check if the faculty is exist
+  const isExist = await FacultyModel.findOne({ id });
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found !');
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+    //delete faculty first
+    const faculty = await FacultyModel.findOneAndDelete({ id }, { session });
+    if (!faculty) {
+      throw new ApiError(404, 'Failed to delete faculty');
+    }
+    //delete user
+    await UserModel.deleteOne({ id });
+    session.commitTransaction();
+    session.endSession();
+
+    return faculty;
+  } catch (error) {
+    session.abortTransaction();
+    throw error;
+  }
+};
+
 export const FacultyService = {
   getAllFaculty,
   getSingleFaculty,
   updateFaculty,
+  deleteFaculty,
 };

@@ -9,7 +9,7 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: true },
     student: { type: Schema.Types.ObjectId, ref: 'Student' },
     faculty: { type: Schema.Types.ObjectId, ref: 'Faculty' },
-    // admin: {type:String, ref: "Admin"},
+    admin: { type: String, ref: 'Admin' },
   },
   {
     // createdAt and updatedAt

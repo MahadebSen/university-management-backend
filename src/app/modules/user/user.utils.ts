@@ -24,6 +24,19 @@ export const findLastFacultyId = async () => {
   return lastFaculty?.id ? lastFaculty.id.substring(2) : undefined;
 };
 
+export const findLastAdminId = async (): Promise<string | undefined> => {
+  const lastFaculty = await UserModel.findOne(
+    { role: 'admin' },
+    { id: 1, _id: 0 }
+  )
+    .sort({
+      createdAt: -1,
+    })
+    .lean();
+
+  return lastFaculty?.id ? lastFaculty.id.substring(2) : undefined;
+};
+
 // Generating Ids -------------------------------
 export const generateStudentId = async (
   academicSemester: IAcademicSemester | null
@@ -49,5 +62,14 @@ export const generateFacultyId = async () => {
   // increment ID by 1
   let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0'); // 0+1 --> 1 --> 00001
   incrementedId = `F-${incrementedId}`;
+  return incrementedId;
+};
+
+export const generateAdminId = async (): Promise<string> => {
+  const currentId =
+    (await findLastAdminId()) || (0).toString().padStart(5, '0');
+  let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
+  incrementedId = `A-${incrementedId}`;
+
   return incrementedId;
 };
