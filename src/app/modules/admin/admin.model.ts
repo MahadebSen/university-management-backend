@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { AdminModel, IAdmin } from './admin.interface';
+import { AdminModelType, IAdmin } from './admin.interface';
 
-const AdminSchema = new Schema<IAdmin, AdminModel>(
+const adminSchema = new Schema<IAdmin, AdminModelType>(
   {
     id: {
       type: String,
@@ -76,4 +76,4 @@ const AdminSchema = new Schema<IAdmin, AdminModel>(
   }
 );
 
-export const Admin = model<IAdmin, AdminModel>('Admin', AdminSchema);
+export const AdminModel = model<IAdmin, AdminModelType>('Admin', adminSchema);

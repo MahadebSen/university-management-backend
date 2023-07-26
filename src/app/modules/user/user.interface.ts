@@ -18,10 +18,19 @@ export type IUser = {
   id: string;
   role: string;
   password: string;
+  needsPasswordChange: true | false;
   student?: Types.ObjectId | IStudent;
   faculty?: Types.ObjectId | IFaculty;
   admin?: Types.ObjectId | IAdmin;
 };
 
+export type IUserMethods = {
+  isUserExist(id: string): Promise<Partial<IUser> | null>;
+  isPasswordMatched(
+    givenPassword: string,
+    savedPassword: string
+  ): Promise<boolean>;
+};
+
 // Custom method
-export type UserModelType = Model<IUser, Record<string, unknown>>;
+export type UserModelType = Model<IUser, Record<string, unknown>, IUserMethods>;

@@ -8,7 +8,7 @@ import { IPaginationOption } from '../../../interfaces/pagination';
 import { UserModel } from '../user/user.model';
 import { adminSearchableFields } from './admin.constant';
 import { IAdmin, IAdminFilters } from './admin.interface';
-import { Admin } from './admin.model';
+import { AdminModel } from './admin.model';
 
 const getAllAdmins = async (
   filters: IAdminFilters,
@@ -47,13 +47,13 @@ const getAllAdmins = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Admin.find(whereConditions)
+  const result = await AdminModel.find(whereConditions)
     .populate('managementDepartment')
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
 
-  const total = await Admin.countDocuments(whereConditions);
+  const total = await AdminModel.countDocuments(whereConditions);
 
   return {
     meta: {
@@ -66,7 +66,9 @@ const getAllAdmins = async (
 };
 
 const getSingleAdmin = async (id: string): Promise<IAdmin | null> => {
-  const result = await Admin.findOne({ id }).populate('ManagementDepartment');
+  const result = await AdminModel.findOne({ id }).populate(
+    'ManagementDepartment'
+  );
   return result;
 };
 
@@ -74,7 +76,7 @@ const updateAdmin = async (
   id: string,
   payload: Partial<IAdmin>
 ): Promise<IAdmin | null> => {
-  const isExist = await Admin.findOne({ id });
+  const isExist = await AdminModel.findOne({ id });
 
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Admin not found !');
@@ -91,7 +93,7 @@ const updateAdmin = async (
     });
   }
 
-  const result = await Admin.findOneAndUpdate({ id }, updatedStudentData, {
+  const result = await AdminModel.findOneAndUpdate({ id }, updatedStudentData, {
     new: true,
   });
   return result;
@@ -99,7 +101,7 @@ const updateAdmin = async (
 
 const deleteAdmin = async (id: string): Promise<IAdmin | null> => {
   // check if the faculty is exist
-  const isExist = await Admin.findOne({ id });
+  const isExist = await AdminModel.findOne({ id });
 
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found !');
@@ -110,7 +112,7 @@ const deleteAdmin = async (id: string): Promise<IAdmin | null> => {
   try {
     session.startTransaction();
     //delete student first
-    const student = await Admin.findOneAndDelete({ id }, { session });
+    const student = await AdminModel.findOneAndDelete({ id }, { session });
     if (!student) {
       throw new ApiError(404, 'Failed to delete student');
     }

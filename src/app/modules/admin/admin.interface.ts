@@ -1,5 +1,6 @@
 import { Model, Types } from 'mongoose';
-import { IManagementDepartment } from '../managementDepartment/managementDepartment.inerface';
+import { IManagementDepartment } from '../managementDepartment/managementDepartment.interface';
+import { IUserBloodGroup, IUserGender } from '../user/user.interface';
 
 export type UserName = {
   firstName: string;
@@ -15,15 +16,15 @@ export type IAdmin = {
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  gender?: 'male' | 'female';
+  gender?: IUserGender;
   permanentAddress?: string;
   presentAddress?: string;
-  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  bloodGroup?: IUserBloodGroup;
   managementDepartment: Types.ObjectId | IManagementDepartment;
   designation: string;
 };
 
-export type AdminModel = Model<IAdmin, Record<string, unknown>>;
+export type AdminModelType = Model<IAdmin, Record<string, unknown>>;
 
 export type IAdminFilters = {
   searchTerm?: string;
@@ -31,8 +32,8 @@ export type IAdminFilters = {
   email?: string;
   contactNo?: string;
   emergencyContactNo?: string;
-  gender?: 'male' | 'female';
-  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  gender?: IUserGender;
+  bloodGroup?: IUserBloodGroup;
   managementDepartment?: string;
   designation?: string;
 };

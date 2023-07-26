@@ -15,7 +15,7 @@ import httpStatus from 'http-status';
 import { FacultyModel } from '../faculty/faculty.model';
 import { IFaculty } from '../faculty/faculty.interface';
 import { IAdmin } from '../admin/admin.interface';
-import { Admin } from '../admin/admin.model';
+import { AdminModel } from '../admin/admin.model';
 
 const createStudent = async (
   student: IStudent,
@@ -156,6 +156,7 @@ const createAdmin = async (
   if (!user.password) {
     user.password = config.default_user_pass as string;
   }
+
   // set role
   user.role = 'admin';
 
@@ -169,7 +170,7 @@ const createAdmin = async (
     user.id = id;
     admin.id = id;
 
-    const newAdmin = await Admin.create([admin], { session });
+    const newAdmin = await AdminModel.create([admin], { session });
 
     if (!newAdmin.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create faculty ');
