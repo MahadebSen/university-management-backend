@@ -21,29 +21,17 @@ const userSchema = new Schema<IUser, Record<string, never>, IUserMethods>(
   }
 );
 
-userSchema.pre('save', async function (next) {
-  // hashing user password
-  // here you can access your document using `this` keyword.
-  // `this` is your whole document before save in the collection.
-  this.password = await bcrypt.hash(
-    this.password,
-    Number(config.bcrypt_salt_round)
-  );
-
-  next();
-});
-
-// user model
-export const UserModel = model<IUser, UserModelType>('User', userSchema);
-
 // Instance method
 // 1. user checking
 userSchema.methods.isUserExist = async function (
   id: string
-): Promise<IUser | null> {
+): Promise<Pick<
+  IUser,
+  'id' | 'password' | 'role' | 'needsPasswordChange'
+> | null> {
   const user = await UserModel.findOne(
     { id },
-    { id: 1, password: 1, needsPasswordChange: 1 }
+    { id: 1, password: 1, role: 1, needsPasswordChange: 1 }
   );
 
   return user;
@@ -58,3 +46,18 @@ userSchema.methods.isPasswordMatched = async function (
 
   return isMatched;
 };
+
+userSchema.pre('save', async function (next) {
+  // hashing user password
+  // here you can access your document using `this` keyword.
+  // `this` is your whole document before save in the collection.
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcrypt_salt_round)
+  );
+
+  next();
+});
+
+// user model
+export const UserModel = model<IUser, UserModelType>('User', userSchema);
