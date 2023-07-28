@@ -50,7 +50,36 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
 };
 
 const refreshToken = async (token: string) => {
-  return token;
+  // verify token
+  let verifiedToken = null;
+  try {
+    verifiedToken = jwtHelper.verifyToken(
+      token,
+      config.jwt.refresh_secret as Secret
+    );
+  } catch (error) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Invalid refresh token');
+  }
+
+  const { id } = verifiedToken;
+
+  // checking deleted user's refresh token
+  const user = new UserModel();
+  const isUserExist = await user.isUserExist(id);
+
+  if (isUserExist) {
+    // generate new token
+    const newAccessToken = jwtHelper.createToken(
+      { id: isUserExist.id, role: isUserExist.role },
+      config.jwt.secret as Secret,
+      config.jwt.expires_in as string
+    );
+    return {
+      accessToken: newAccessToken,
+    };
+  } else {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
 };
 
 export const AuthService = {
