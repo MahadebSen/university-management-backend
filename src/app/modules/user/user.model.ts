@@ -11,6 +11,7 @@ const userSchema = new Schema<IUser, Record<string, never>, IUserMethods>(
     // select: 0 will remove the password field from the response
     password: { type: String, required: true, select: 0 },
     needsPasswordChange: { type: Boolean, default: true },
+    passwordChangedAt: { type: Date },
     student: { type: Schema.Types.ObjectId, ref: 'Student' },
     faculty: { type: Schema.Types.ObjectId, ref: 'Faculty' },
     admin: { type: Schema.Types.ObjectId, ref: 'Admin' },
@@ -47,6 +48,7 @@ userSchema.methods.isPasswordMatched = async function (
   return isMatched;
 };
 
+// UserModel.create() / UserModel.save()
 userSchema.pre('save', async function (next) {
   // hashing user password
   // here you can access your document using `this` keyword.
@@ -55,6 +57,10 @@ userSchema.pre('save', async function (next) {
     this.password,
     Number(config.bcrypt_salt_round)
   );
+
+  if (!this.needsPasswordChange) {
+    this.passwordChangedAt = new Date();
+  }
 
   next();
 });
