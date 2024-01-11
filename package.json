@@ -10,7 +10,8 @@
     "lint-prettier": "yarn lint:check && yarn prettier:check",
     "lint:fix": "eslint . --fix",
     "prettier:fix": "prettier --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build"
   },
   "author": "",
   "license": "ISC",
